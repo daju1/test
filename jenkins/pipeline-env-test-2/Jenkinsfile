@@ -1,0 +1,61 @@
+pipeline {
+    agent any
+    
+    stages {
+        stage('Stage_1') {
+            steps {
+                myTask()
+            }
+        }
+        stage('Stages 2 and 3') {
+            parallel {
+                stage('Stage_2') {
+                    agent {
+                        docker { image 'ubuntu:24.04' }
+                    }
+                    steps {
+                        myTask()
+                    }
+                }
+                stage('Stage_3') {
+                    when {
+                        expression {
+                            return branchName == 'release' || branchName == 'feature';
+                        }
+                    }
+                    steps {
+                        myTask()
+                    }
+                }
+            }
+        }
+    }
+    post {
+        always {
+            archiveArtifacts artifacts: '**', fingerprint: true, followSymlinks: false
+            //junit 'build/reports/**/*.xml'            
+        }
+    }
+}
+
+def getLogs()
+{
+    //sh 'curl ${BUILD_URL}/consoleText'
+    //sh 'curl $JENKINS_HOME/jobs/$JOB_NAME/builds/$BUILD_ID/log'
+    sh 'cat $JENKINS_HOME/jobs/$JOB_NAME/builds/$BUILD_ID/log'
+    //sh 'cat $(currentBuild.rawBuild.logFile.text)'
+    //sh 'curl ${BUILD_URL}/consoleText -OutFile SomeFile.txt'
+}
+
+def myTask()
+{
+    echo "${STAGE_NAME}"
+    sh 'lsb_release -a'
+    sh 'printenv'
+    
+    echo "'${STAGE_NAME}' > Build_${BUILD_ID}_${STAGE_NAME}.log"
+    echo "'\n' > Build_${BUILD_ID}_${STAGE_NAME}.log"
+    sh 'lsb_release -a > Build_${BUILD_ID}_${STAGE_NAME}.log'
+    echo "'\n' > Build_${BUILD_ID}_${STAGE_NAME}.log"
+    sh 'printenv > Build_${BUILD_ID}_${STAGE_NAME}.log'
+}
