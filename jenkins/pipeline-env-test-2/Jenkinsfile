@@ -11,7 +11,8 @@ pipeline {
             parallel {
                 stage('Stage_2') {
                     agent {
-                        docker { image 'ubuntu:24.04' }
+                        dockerfile true
+                        //docker { image 'ubuntu:24.04' }
                     }
                     steps {
                         myTask()
