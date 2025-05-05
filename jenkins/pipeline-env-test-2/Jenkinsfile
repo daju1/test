@@ -11,7 +11,8 @@ pipeline {
             parallel {
                 stage('Stage_2') {
                     agent {
-                        dockerfile true
+                        dockerfile { filename 'jenkins/pipeline-env-test-2/Dockerfile'}
+                        //dockerfile true
                         //docker { image 'ubuntu:24.04' }
                     }
                     steps {
