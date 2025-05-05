@@ -67,7 +67,7 @@ def myDocker()
     checkout scm
 
     def dockerFile = 'jenkins/pipeline-env-test-2/Dockerfile'
-    def dockerImage = "my-image:${env.BUILD_ID}"
+    def imageName = "my-image:${env.BUILD_ID}"
     def dockerArgs = "-t ${dockerImage}"
     def imageArgs = "-f ${dockerFile} ${dockerArgs}"
     def customImage = docker.build(imageName, imageArgs)
