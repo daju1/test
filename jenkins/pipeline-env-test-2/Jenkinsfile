@@ -7,6 +7,11 @@ pipeline {
                 myTask()
             }
         }
+        post {
+            always {
+                archiveArtifacts artifacts: '**', fingerprint: true, followSymlinks: false           
+            }
+        }
         stage('Stages 2 and 3') {
             parallel {
                 stage('Stage_2') {
@@ -18,7 +23,13 @@ pipeline {
                     steps {
                         myTask()
                     }
+                } // stage('Stage_2')
+                post {
+                    always {
+                        archiveArtifacts artifacts: '**', fingerprint: true, followSymlinks: false           
+                    }
                 }
+
                 stage('Stage_3') {
                     when {
                         expression {
@@ -28,26 +39,23 @@ pipeline {
                     steps {
                         myTask()
                     }
+                } // stage('Stage_3')
+                post {
+                    always {
+                        archiveArtifacts artifacts: '**', fingerprint: true, followSymlinks: false           
+                    }
                 }
-            }
-        }
+            } // parallel
+        } // stage('Stages 2 and 3')
     }
-    post {
-        always {
-            archiveArtifacts artifacts: '**', fingerprint: true, followSymlinks: false
-            //junit 'build/reports/**/*.xml'            
-        }
-    }
+    //post {
+    //    always {
+    //        archiveArtifacts artifacts: '**', fingerprint: true, followSymlinks: false
+    //        //junit 'build/reports/**/*.xml'            
+    //    }
+    //}
 }
 
-def getLogs()
-{
-    //sh 'curl ${BUILD_URL}/consoleText'
-    //sh 'curl $JENKINS_HOME/jobs/$JOB_NAME/builds/$BUILD_ID/log'
-    sh 'cat $JENKINS_HOME/jobs/$JOB_NAME/builds/$BUILD_ID/log'
-    //sh 'cat $(currentBuild.rawBuild.logFile.text)'
-    //sh 'curl ${BUILD_URL}/consoleText -OutFile SomeFile.txt'
-}
 
 def myTask()
 {
