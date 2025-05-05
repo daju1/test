@@ -6,12 +6,13 @@ pipeline {
             steps {
                 myTask()
             }
-        }
-        post {
-            always {
-                archiveArtifacts artifacts: '**', fingerprint: true, followSymlinks: false           
+            post {
+                always {
+                    archiveArtifacts artifacts: '**', fingerprint: true, followSymlinks: false           
+                }
             }
         }
+
         stage('Stages 2 and 3') {
             parallel {
                 stage('Stage_2') {
@@ -23,12 +24,13 @@ pipeline {
                     steps {
                         myTask()
                     }
-                } // stage('Stage_2')
-                post {
-                    always {
-                        archiveArtifacts artifacts: '**', fingerprint: true, followSymlinks: false           
+                    post {
+                        always {
+                            archiveArtifacts artifacts: '**', fingerprint: true, followSymlinks: false           
+                        }
                     }
-                }
+                } // stage('Stage_2')
+
 
                 stage('Stage_3') {
                     when {
@@ -39,12 +41,13 @@ pipeline {
                     steps {
                         myTask()
                     }
+                    post {
+                        always {
+                            archiveArtifacts artifacts: '**', fingerprint: true, followSymlinks: false           
+                        }
+                    }                    
                 } // stage('Stage_3')
-                post {
-                    always {
-                        archiveArtifacts artifacts: '**', fingerprint: true, followSymlinks: false           
-                    }
-                }
+
             } // parallel
         } // stage('Stages 2 and 3')
     }
