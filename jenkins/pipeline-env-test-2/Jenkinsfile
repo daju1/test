@@ -66,10 +66,10 @@ def myDocker()
 //node {
     checkout scm
 
-    def imageName = "my-image:${env.BUILD_ID}"
     def dockerfile = 'jenkins/pipeline-env-test-2/Dockerfile'
-    def dockerArgs = ''
-    def imageArgs = "-f ${dockerfile} ${dockerArgs}"
+    def dockerImage = "my-image:${env.BUILD_ID}"
+    def dockerArgs = "-t ${dockerImage}"
+    def imageArgs = "-f ${dockerFile} ${dockerArgs}"
     def customImage = docker.build(imageName, imageArgs)
 
     customImage.inside {
