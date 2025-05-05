@@ -56,8 +56,8 @@ def myTask()
     sh 'printenv'
     
     sh "echo ${STAGE_NAME} > Build_${BUILD_ID}_${STAGE_NAME}.log"
-    echo "'\n'" > Build_${BUILD_ID}_${STAGE_NAME}.log
+    echo "'\n' > Build_${BUILD_ID}_${STAGE_NAME}.log"
     sh '\$(lsb_release -a) > Build_${BUILD_ID}_${STAGE_NAME}.log'
-    echo "'\n'" > Build_${BUILD_ID}_${STAGE_NAME}.log
+    echo "'\n' > Build_${BUILD_ID}_${STAGE_NAME}.log"
     sh 'printenv > Build_${BUILD_ID}_${STAGE_NAME}.log'
 }
