@@ -21,23 +21,10 @@ pipeline {
                         //dockerfile true
                         //docker { image 'ubuntu:24.04' }
                     //}
-                    node {
-                        checkout scm
-
-                        def imageName = "my-image:${env.BUILD_ID}"
-                        def dockerfile = 'jenkins/pipeline-env-test-2/Dockerfile'
-                        def imageArgs = "-f ${dockerfile} ${dockerArgs}"
-                        def customImage = docker.build(imageName, imageArgs)
-
-                        customImage.inside {
-                            //sh 'make test'
-                            myTask()
-                        }
-                    }
-                    dockerImage = docker.build()
 
                     steps {
-                        myTask()
+                        //myTask()
+                        myDocker()
                     }
                     post {
                         always {
@@ -72,6 +59,23 @@ pipeline {
     //        //junit 'build/reports/**/*.xml'            
     //    }
     //}
+}
+
+def myDocker()
+{
+//node {
+    checkout scm
+
+    def imageName = "my-image:${env.BUILD_ID}"
+    def dockerfile = 'jenkins/pipeline-env-test-2/Dockerfile'
+    def imageArgs = "-f ${dockerfile} ${dockerArgs}"
+    def customImage = docker.build(imageName, imageArgs)
+
+    customImage.inside {
+        //sh 'make test'
+        myTask()
+    }
+//}   
 }
 
 
