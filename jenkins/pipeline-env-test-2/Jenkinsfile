@@ -68,6 +68,7 @@ def myDocker()
 
     def imageName = "my-image:${env.BUILD_ID}"
     def dockerfile = 'jenkins/pipeline-env-test-2/Dockerfile'
+    def dockerArgs = ''
     def imageArgs = "-f ${dockerfile} ${dockerArgs}"
     def customImage = docker.build(imageName, imageArgs)
 
