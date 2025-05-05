@@ -16,11 +16,26 @@ pipeline {
         stage('Stages 2 and 3') {
             parallel {
                 stage('Stage_2') {
-                    agent {
-                        dockerfile { filename 'jenkins/pipeline-env-test-2/Dockerfile'}
+                    //agent {
+                    //    dockerfile { filename 'jenkins/pipeline-env-test-2/Dockerfile'}
                         //dockerfile true
                         //docker { image 'ubuntu:24.04' }
+                    //}
+                    node {
+                        checkout scm
+
+                        def imageName = "my-image:${env.BUILD_ID}"
+                        def dockerfile = 'jenkins/pipeline-env-test-2/Dockerfile'
+                        def imageArgs = "-f ${dockerfile} ${dockerArgs}"
+                        def customImage = docker.build(imageName, imageArgs)
+
+                        customImage.inside {
+                            //sh 'make test'
+                            myTask()
+                        }
                     }
+                    dockerImage = docker.build()
+
                     steps {
                         myTask()
                     }
