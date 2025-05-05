@@ -16,15 +16,21 @@ pipeline {
         stage('Stages 2 and 3') {
             parallel {
                 stage('Stage_2') {
-                    //agent {
-                    //    dockerfile { filename 'jenkins/pipeline-env-test-2/Dockerfile'}
-                        //dockerfile true
+                    agent {
+                        dockerfile {
+                            filename 'Dockerfile'
+                            dir 'jenkins/pipeline-env-test-2'
+                            label 'my-defined-label'
+                            additionalBuildArgs '--build-arg version=1.0.2'
+                            args '-v /tmp:/tmp'
+                        }
+
                         //docker { image 'ubuntu:24.04' }
-                    //}
+                    }
 
                     steps {
-                        //myTask()
-                        myDocker()
+                        myTask()
+                        //myDocker()
                     }
                     post {
                         always {
