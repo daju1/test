@@ -8,7 +8,7 @@ pipeline {
             }
             post {
                 always {
-                    archiveArtifacts artifacts: '**', fingerprint: true, followSymlinks: false           
+                    archiveArtifacts artifacts: '*.log', fingerprint: true, followSymlinks: false           
                 }
             }
         }
@@ -20,7 +20,7 @@ pipeline {
                         dockerfile {
                             filename 'Dockerfile'
                             dir 'jenkins/pipeline-env-test-2'
-                            label 'my-defined-label'
+                            // label 'my-defined-label' // Queued There are no nodes with the label ‘my-defined-label’
                             additionalBuildArgs '--build-arg version=1.0.2'
                             args '-v /tmp:/tmp'
                         }
@@ -34,7 +34,7 @@ pipeline {
                     }
                     post {
                         always {
-                            archiveArtifacts artifacts: '**', fingerprint: true, followSymlinks: false           
+                            archiveArtifacts artifacts: '*.log', fingerprint: true, followSymlinks: false           
                         }
                     }
                 } // stage('Stage_2')
@@ -51,7 +51,7 @@ pipeline {
                     }
                     post {
                         always {
-                            archiveArtifacts artifacts: '**', fingerprint: true, followSymlinks: false           
+                            archiveArtifacts artifacts: '*.log', fingerprint: true, followSymlinks: false           
                         }
                     }                    
                 } // stage('Stage_3')
