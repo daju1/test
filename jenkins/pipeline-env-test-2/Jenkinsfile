@@ -8,7 +8,7 @@ pipeline {
             }
             post {
                 always {
-                    archiveArtifacts artifacts: 'Build_${BUILD_ID}_*.log', fingerprint: true, followSymlinks: false
+                    archiveArtifacts artifacts: "Build_${BUILD_ID}_*.log", fingerprint: true, followSymlinks: false
                 }
             }
         }
@@ -34,7 +34,7 @@ pipeline {
                     }
                     post {
                         always {
-                            archiveArtifacts artifacts: 'Build_${BUILD_ID}_*.log', fingerprint: true, followSymlinks: false
+                            archiveArtifacts artifacts: "Build_${BUILD_ID}_*.log", fingerprint: true, followSymlinks: false
                         }
                     }
                 } // stage('Stage_2')
@@ -51,7 +51,7 @@ pipeline {
                     }
                     post {
                         always {
-                            archiveArtifacts artifacts: 'Build_${BUILD_ID}_*.log', fingerprint: true, followSymlinks: false
+                            archiveArtifacts artifacts: "Build_${BUILD_ID}_*.log", fingerprint: true, followSymlinks: false
                         }
                     }                    
                 } // stage('Stage_3')
