@@ -59,11 +59,11 @@ pipeline {
             } // parallel
         } // stage('Stages 2 and 3')
     }
-    post {
-        always {
-            //archiveArtifacts artifacts: 'pipeline.log', fingerprint: true, followSymlinks: false
-        }
-    }
+    //post {
+    //    always {
+    //        archiveArtifacts artifacts: 'pipeline.log', fingerprint: true, followSymlinks: false
+    //    }
+    //}
 }
 
 def myDocker()
