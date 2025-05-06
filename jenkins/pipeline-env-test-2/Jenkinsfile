@@ -92,6 +92,7 @@ def myTask()
     sh 'printenv'
     
     sh "echo ${STAGE_NAME} > Build_${BUILD_ID}_${STAGE_NAME}.log"
+    sh "echo ${BUILD_TIMESTAMP} >> Build_${BUILD_ID}_${STAGE_NAME}.log"
     //echo "'\n' > Build_${BUILD_ID}_${STAGE_NAME}.log"
     sh "echo \$(lsb_release -a) >> Build_${BUILD_ID}_${STAGE_NAME}.log"
     //echo "'\n' > Build_${BUILD_ID}_${STAGE_NAME}.log"
