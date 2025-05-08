@@ -1,11 +1,12 @@
 pipeline {
-    agent any
+    agent { label {'docker'} }
     parameters {
 
         choice(name: 'branchName', choices: ['debug', 'release', 'feature'], description: 'Pick something')
     }
     stages {
         stage('Stage_1') {
+            agent any
             steps {
                 myTask()
             }
@@ -20,9 +21,6 @@ pipeline {
             parallel {
                 stage('Stage_2') {
                     agent {
-
-                        label {'docker'}
-
                         dockerfile {
                             filename 'Dockerfile'
                             dir 'jenkins/pipeline-env-test-2'
@@ -47,6 +45,7 @@ pipeline {
 
 
                 stage('Stage_3') {
+                    agent any
                     when {
                         expression {
                             return branchName == 'release' || branchName == 'feature';
