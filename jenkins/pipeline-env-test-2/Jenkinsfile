@@ -1,6 +1,9 @@
 pipeline {
     agent any
-    
+    parameters {
+
+        choice(name: 'branchName', choices: ['debug', 'release', 'feature'], description: 'Pick something')
+    }
     stages {
         stage('Stage_1') {
             steps {
@@ -17,6 +20,9 @@ pipeline {
             parallel {
                 stage('Stage_2') {
                     agent {
+
+                        label {'docker'}
+
                         dockerfile {
                             filename 'Dockerfile'
                             dir 'jenkins/pipeline-env-test-2'
