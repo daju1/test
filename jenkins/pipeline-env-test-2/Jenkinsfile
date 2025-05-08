@@ -1,5 +1,5 @@
 pipeline {
-    agent { label {'docker'} }
+    agent { label 'docker' }
     parameters {
 
         choice(name: 'branchName', choices: ['debug', 'release', 'feature'], description: 'Pick something')
