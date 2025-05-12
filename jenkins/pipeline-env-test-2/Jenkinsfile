@@ -5,10 +5,10 @@ pipeline {
         logging (
             pollLogging :true
             //pruneDays : 20
-            target : {
-                name 'org.techworld.sonar'
-                level 'FINE'
-            )
+            //target : {
+            //    name 'org.techworld.sonar'
+            //    level 'FINE'
+            //s)
         }
     }
     parameters {
