@@ -1,11 +1,7 @@
 pipeline {
     agent { label 'docker' }
-    options { timestamps() }
-    parameters {
-
-        choice(name: 'branchName', choices: ['debug', 'release', 'feature'], description: 'Pick something')
-    }
-    options{ 
+    options {
+        timestamps()
         logging{
             pollLogging true
             pruneDays 20
@@ -14,7 +10,12 @@ pipeline {
                 level 'FINE'
             }
         }
-    }      
+    }
+    parameters {
+
+        choice(name: 'branchName', choices: ['debug', 'release', 'feature'], description: 'Pick something')
+    }
+   
     stages {
         stage('Stage_1') {
             agent any
