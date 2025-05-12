@@ -4,13 +4,49 @@ node('linux'){
   //def mvnHome = tool 'M3'
   //env.PATH = "${mvnHome}/bin:${env.PATH}"
   //sh 'mvn -B clean verify'
+  myTask()
 }
 
 node('docker'){
   git url: 'https://github.com/jglick/simple-maven-project-with-tests.git'
   echo "docker"
-  def mvnHome = tool 'M3'
-  env.PATH = "${mvnHome}/bin:${env.PATH}"
-  sh 'mvn -B clean verify'
+  //def mvnHome = tool 'M3'
+  //env.PATH = "${mvnHome}/bin:${env.PATH}"
+  //sh 'mvn -B clean verify'
+  myDocker()
+}
+
+def myDocker()
+{
+//node {
+    checkout scm
+
+    def dockerFile = 'jenkins/pipeline-env-test-2/Dockerfile'
+    def imageName = "my-image:${env.BUILD_ID}"
+    def dockerArgs = " --pull --rm ${pwd}"
+    def imageArgs = "-f ${dockerFile} ${dockerArgs}"
+    def customImage = docker.build(imageName, imageArgs)
+
+    customImage.inside {
+        //sh 'make test'
+        myTask()
+    }
+//}   
+}
+
+def myTask()
+{
+    echo "${STAGE_NAME}"
+    sh 'lsb_release -a'
+    sh 'uname -a'
+    sh 'printenv'
+    
+    sh "echo ${STAGE_NAME} > Build_${BUILD_ID}_${STAGE_NAME}.log"
+    sh "echo ${BUILD_TIMESTAMP} >> Build_${BUILD_ID}_${STAGE_NAME}.log"
+    //echo "'\n' > Build_${BUILD_ID}_${STAGE_NAME}.log"
+    sh "echo \$(lsb_release -a) >> Build_${BUILD_ID}_${STAGE_NAME}.log"
+    sh "echo \$(uname -a) >> Build_${BUILD_ID}_${STAGE_NAME}.log"
+    //echo "'\n' > Build_${BUILD_ID}_${STAGE_NAME}.log"
+    sh 'printenv >> Build_${BUILD_ID}_${STAGE_NAME}.log'
 }
 
