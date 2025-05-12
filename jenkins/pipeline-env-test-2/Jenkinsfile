@@ -9,7 +9,7 @@ pipeline {
             //    name 'org.techworld.sonar'
             //    level 'FINE'
             //s)
-        }
+        )
     }
     parameters {
 
