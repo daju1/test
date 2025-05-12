@@ -2,14 +2,14 @@ pipeline {
     agent { label 'docker' }
     options {
         timestamps()
-        logging (
-            pollLogging :true
+        //logging (
+        //    pollLogging :true
             //pruneDays : 20
             //target : {
             //    name 'org.techworld.sonar'
             //    level 'FINE'
             //s)
-        )
+        //)
     }
     parameters {
 
