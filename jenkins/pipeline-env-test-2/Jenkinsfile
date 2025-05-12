@@ -3,9 +3,9 @@ pipeline {
     options {
         timestamps()
         logging (
-            pollLogging true
-            pruneDays 20
-            target{
+            pollLogging :true
+            pruneDays : 20
+            target : {
                 name 'org.techworld.sonar'
                 level 'FINE'
             )
