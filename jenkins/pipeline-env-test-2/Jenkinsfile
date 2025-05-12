@@ -9,6 +9,16 @@ pipeline {
         stage('Stage_1') {
             agent any
             options { timestamps() }
+            properties{ 
+                logging{
+                    pollLogging true
+                    pruneDays 20
+                    target{
+                        name 'org.techworld.sonar'
+                        level 'FINE'
+                    }
+                }
+            }            
             steps {
                 myTask()
             }
