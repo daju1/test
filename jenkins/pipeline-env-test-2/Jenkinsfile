@@ -2,7 +2,7 @@ pipeline {
     agent { label 'docker' }
     options {
         timestamps()
-        logging{
+        logging () {
             pollLogging true
             pruneDays 20
             target{
