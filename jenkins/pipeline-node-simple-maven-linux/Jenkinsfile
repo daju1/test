@@ -23,8 +23,8 @@ def myDocker()
         //sh 'make test'
         myTask()
 
-        def mvnHome = tool 'M3'
-        env.PATH = "${mvnHome}/bin:${env.PATH}"
+        //def mvnHome = tool 'M3'
+        //env.PATH = "${mvnHome}/bin:${env.PATH}"
         sh 'mvn -B clean verify'        
     }
 }
