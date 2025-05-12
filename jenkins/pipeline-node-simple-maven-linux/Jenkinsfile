@@ -1,18 +1,11 @@
 node('linux'){
-  git url: 'https://github.com/jglick/simple-maven-project-with-tests.git'
   echo "linux"
-  //def mvnHome = tool 'M3'
-  //env.PATH = "${mvnHome}/bin:${env.PATH}"
-  //sh 'mvn -B clean verify'
   myTask()
 }
 
 node('docker'){
   git url: 'https://github.com/jglick/simple-maven-project-with-tests.git'
   echo "docker"
-  def mvnHome = tool 'M3'
-  env.PATH = "${mvnHome}/bin:${env.PATH}"
-  sh 'mvn -B clean verify'
   myDocker()
 }
 
@@ -29,6 +22,10 @@ def myDocker()
     customImage.inside {
         //sh 'make test'
         myTask()
+
+        def mvnHome = tool 'M3'
+        env.PATH = "${mvnHome}/bin:${env.PATH}"
+        sh 'mvn -B clean verify'        
     }
 }
 
