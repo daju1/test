@@ -5,7 +5,7 @@ pipeline {
 
         choice(name: 'branchName', choices: ['debug', 'release', 'feature'], description: 'Pick something')
     }
-    properties{ 
+    options{ 
         logging{
             pollLogging true
             pruneDays 20
