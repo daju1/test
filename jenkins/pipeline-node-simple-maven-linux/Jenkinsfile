@@ -1,11 +1,15 @@
 node('linux'){
-  echo "linux"
-  myTask()
+  timestamps {
+    echo "linux"
+    myTask()
+  }
 }
 
 node('docker'){
-  echo "docker"
-  myDocker()
+  timestamps {
+    echo "docker"
+    myDocker()
+  }
 }
 
 def myDocker()
