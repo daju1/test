@@ -10,18 +10,17 @@ node('linux'){
 node('docker'){
   git url: 'https://github.com/jglick/simple-maven-project-with-tests.git'
   echo "docker"
-  //def mvnHome = tool 'M3'
-  //env.PATH = "${mvnHome}/bin:${env.PATH}"
-  //sh 'mvn -B clean verify'
+  def mvnHome = tool 'M3'
+  env.PATH = "${mvnHome}/bin:${env.PATH}"
+  sh 'mvn -B clean verify'
   myDocker()
 }
 
 def myDocker()
 {
-//node {
     checkout scm
 
-    def dockerFile = 'jenkins/pipeline-env-test-2/Dockerfile'
+    def dockerFile = 'jenkins/pipeline-node-simple-maven-linux/Dockerfile'
     def imageName = "my-image:${env.BUILD_ID}"
     def dockerArgs = " --pull --rm ${pwd}"
     def imageArgs = "-f ${dockerFile} ${dockerArgs}"
@@ -31,7 +30,6 @@ def myDocker()
         //sh 'make test'
         myTask()
     }
-//}   
 }
 
 def myTask()
