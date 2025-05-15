@@ -2,7 +2,7 @@ node('linux'){
   stage 'echo'
   //timestamps {
       echo "linux - Stage_1"
-      myTask("linux")
+      myTask('Stage_1')
       /*post {
         always {
           archiveArtifacts artifacts: "Build_${BUILD_ID}_*.log", fingerprint: true, followSymlinks: false
@@ -12,20 +12,20 @@ node('linux'){
 
 }
 
-/*node('docker'){
-    stage 'Stage_2' {
+node('docker'){
+
+  stage 'Stage_2'
   timestamps {
       echo "docker Stage_2"
       myDocker()
   }
-    }
-    stage 'Stage_3' {
+
+  stage 'Stage_3'
   timestamps {
       echo "Stage_3"
-      myTask()
+      myTask('Stage_3')
   }
-    }
-}*/
+}
 
 def myDocker()
 {
