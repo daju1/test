@@ -16,13 +16,13 @@ node('docker'){
   stage 'Stages_2_and_3'
   timestamps{
     parallel(
-      //stage 'Stage_2'
+      stage 'Stage_2'
       {
           echo "docker Stage_2"
           myDocker()
       }
 
-      //stage 'Stage_3'
+      stage 'Stage_3'
       {
           echo "Stage_3"
           myTask('Stage_3')
