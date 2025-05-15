@@ -1,15 +1,14 @@
 node('linux'){
-  stage 'echo' {
+  stage 'echo'
   //timestamps {
       echo "linux - Stage_1"
-      myTask()
+      myTask("linux")
       /*post {
         always {
           archiveArtifacts artifacts: "Build_${BUILD_ID}_*.log", fingerprint: true, followSymlinks: false
         }
       }*/
     //}
-  }
 
 }
 
@@ -40,7 +39,7 @@ def myDocker()
 
     customImage.inside {
         //sh 'make test'
-        myTask()
+        myTask("docker")
         
         git url: 'https://github.com/jglick/simple-maven-project-with-tests.git'
 
@@ -50,7 +49,7 @@ def myDocker()
     }
 }
 
-def myTask()
+def myTask(STAGE_NAME)
 {
     echo "${STAGE_NAME}"
     //sh 'lsb_release -a'
