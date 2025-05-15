@@ -24,11 +24,13 @@ node('docker'){
         "Stage_2" : {
             echo "Stage_2"
             myDocker()
+            archiveArtifacts artifacts: "Build_${BUILD_ID}_*.log", fingerprint: true, followSymlinks: false
         },
         "Stage_3": {
           if (params.branchName == 'release' || params.branchName == 'feature') {
             echo "Stage_3"
             myTask('Stage_3')
+            archiveArtifacts artifacts: "Build_${BUILD_ID}_*.log", fingerprint: true, followSymlinks: false
           }
         }
       )
