@@ -29,7 +29,7 @@ node('docker'){
         }
       }
     )
-  }
+
 }
 
 def myDocker()
