@@ -1,8 +1,12 @@
-parameters {
-  choice(name: 'branchName', 
-         choices: ['debug', 'release', 'feature'],
-         description: 'Pick something')
-}
+properties(
+    [
+        parameters([
+            choice(name: 'branchName', 
+                  choices: ['debug', 'release', 'feature'],
+                  description: 'Pick something')
+        ])   
+    ]
+)  
 
 node('linux'){
   stage 'Stage_1'
