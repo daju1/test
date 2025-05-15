@@ -3,6 +3,11 @@ node('linux'){
     stage('Stage_1') {
       echo "linux - Stage_1"
       myTask()
+      /*post {
+        always {
+          archiveArtifacts artifacts: "Build_${BUILD_ID}_*.log", fingerprint: true, followSymlinks: false
+        }
+      }*/
     }
   }
 }
