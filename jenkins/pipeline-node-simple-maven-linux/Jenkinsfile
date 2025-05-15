@@ -46,7 +46,7 @@ def myDocker()
 
 def myTask()
 {
-    /echo "${STAGE_NAME}"
+    echo "${STAGE_NAME}"
     //sh 'lsb_release -a'
     sh 'uname -a'
     sh 'printenv'
