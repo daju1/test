@@ -16,12 +16,12 @@ node('docker'){
   stage 'Stages_2_and_3'
   timestamps{
     parallel(
-      'checkout' : {
+      {
           echo "Stage_2"
           //myDocker()
       }
 
-      'build' : {
+      {
           echo "Stage_3"
           //myTask('Stage_3')
       }
