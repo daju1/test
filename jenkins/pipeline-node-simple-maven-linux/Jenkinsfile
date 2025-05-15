@@ -16,12 +16,12 @@ node('docker'){
   stage 'Stages_2_and_3'
   timestamps{
     parallel(
-      {
+      'gfortran':{
           echo "Stage_2"
           //myDocker()
       }
 
-      {
+      'ifort':{
           echo "Stage_3"
           //myTask('Stage_3')
       }
