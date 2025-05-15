@@ -1,5 +1,5 @@
 node('linux'){
-  stage 'Stage_1' {
+  stage 'echo' {
   timestamps {
       echo "linux - Stage_1"
       myTask()
