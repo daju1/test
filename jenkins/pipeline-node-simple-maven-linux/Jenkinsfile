@@ -1,5 +1,5 @@
 node('linux'){
-  stage 'echo'
+  stage 'echo' {
   //timestamps {
       echo "linux - Stage_1"
       myTask()
@@ -9,6 +9,7 @@ node('linux'){
         }
       }*/
     //}
+  }
 
 }
 
