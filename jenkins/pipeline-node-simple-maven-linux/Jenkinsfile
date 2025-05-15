@@ -1,6 +1,6 @@
 node('linux'){
   stage 'echo' {
-  timestamps {
+  //timestamps {
       echo "linux - Stage_1"
       myTask()
       /*post {
@@ -8,7 +8,7 @@ node('linux'){
           archiveArtifacts artifacts: "Build_${BUILD_ID}_*.log", fingerprint: true, followSymlinks: false
         }
       }*/
-    }
+    //}
   }
 }
 
