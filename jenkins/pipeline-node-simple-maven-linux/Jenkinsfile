@@ -12,7 +12,7 @@ node('linux'){
   }
 }
 
-node('docker'){
+/*node('docker'){
     stage 'Stage_2' {
   timestamps {
       echo "docker Stage_2"
@@ -25,7 +25,7 @@ node('docker'){
       myTask()
   }
     }
-}
+}*/
 
 def myDocker()
 {
