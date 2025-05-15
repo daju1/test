@@ -1,14 +1,24 @@
 node('linux'){
   timestamps {
-    echo "linux"
-    myTask()
+    stage('Stage_1') {
+      echo "linux - Stage_1"
+      myTask()
+    }
   }
 }
 
 node('docker'){
   timestamps {
-    echo "docker"
-    myDocker()
+    parallel {
+      stage('Stage_2') {
+        echo "docker Stage_2"
+        myDocker()
+      }
+      stage('Stage_3') {
+        echo "Stage_3"
+        myTask()
+      }
+    }
   }
 }
 
@@ -36,17 +46,17 @@ def myDocker()
 
 def myTask()
 {
-    //echo "${STAGE_NAME}"
+    /echo "${STAGE_NAME}"
     //sh 'lsb_release -a'
     sh 'uname -a'
     sh 'printenv'
     
-    //sh "echo ${STAGE_NAME} > Build_${BUILD_ID}_${STAGE_NAME}.log"
-    //sh "echo ${BUILD_TIMESTAMP} >> Build_${BUILD_ID}_${STAGE_NAME}.log"
+    sh "echo ${STAGE_NAME} > Build_${BUILD_ID}_${STAGE_NAME}.log"
+    sh "echo ${BUILD_TIMESTAMP} >> Build_${BUILD_ID}_${STAGE_NAME}.log"
     //echo "'\n' > Build_${BUILD_ID}_${STAGE_NAME}.log"
     //sh "echo \$(lsb_release -a) >> Build_${BUILD_ID}_${STAGE_NAME}.log"
-    //sh "echo \$(uname -a) >> Build_${BUILD_ID}_${STAGE_NAME}.log"
+    sh "echo \$(uname -a) >> Build_${BUILD_ID}_${STAGE_NAME}.log"
     //echo "'\n' > Build_${BUILD_ID}_${STAGE_NAME}.log"
-    //sh 'printenv >> Build_${BUILD_ID}_${STAGE_NAME}.log'
+    sh 'printenv >> Build_${BUILD_ID}_${STAGE_NAME}.log'
 }
 
