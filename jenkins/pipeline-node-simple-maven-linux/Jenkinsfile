@@ -1,6 +1,6 @@
 node('linux'){
+  stage 'Stage_1' {
   timestamps {
-    stage 'Stage_1' {
       echo "linux - Stage_1"
       myTask()
       /*post {
@@ -13,14 +13,17 @@ node('linux'){
 }
 
 node('docker'){
-  timestamps {
     stage 'Stage_2' {
+  timestamps {
       echo "docker Stage_2"
       myDocker()
+  }
     }
     stage 'Stage_3' {
+  timestamps {
       echo "Stage_3"
       myTask()
+  }
     }
   }
 }
