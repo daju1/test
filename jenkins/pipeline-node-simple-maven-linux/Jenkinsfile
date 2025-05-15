@@ -1,6 +1,6 @@
 node('linux'){
   timestamps {
-    stage('Stage_1') {
+    stage 'Stage_1' {
       echo "linux - Stage_1"
       myTask()
       /*post {
