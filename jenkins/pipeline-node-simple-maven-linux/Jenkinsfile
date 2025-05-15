@@ -1,14 +1,14 @@
 node('linux'){
   stage 'echo'
-  //timestamps {
-      echo "linux - Stage_1"
-      myTask('Stage_1')
-      /*post {
-        always {
-          archiveArtifacts artifacts: "Build_${BUILD_ID}_*.log", fingerprint: true, followSymlinks: false
-        }
-      }*/
-    //}
+  timestamps {
+    echo "linux - Stage_1"
+    myTask('Stage_1')
+    /*post {
+      always {
+        archiveArtifacts artifacts: "Build_${BUILD_ID}_*.log", fingerprint: true, followSymlinks: false
+      }
+    }*/
+  }
 
 }
 
