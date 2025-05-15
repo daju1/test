@@ -26,10 +26,10 @@ node('docker'){
             myDocker()
         },
         "Stage_3": {
-            if (branchName == 'release' || branchName == 'feature') {
-              echo "Stage_3"
-              myTask('Stage_3')
-            }
+          if (param.branchName == 'release' || param.branchName == 'feature') {
+            echo "Stage_3"
+            myTask('Stage_3')
+          }
         }
       )
     }
