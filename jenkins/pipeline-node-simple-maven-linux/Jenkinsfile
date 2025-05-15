@@ -14,8 +14,8 @@ node('linux'){
 
 node('docker'){
   stage 'Stages_2_and_3'
-  parallel(
   timestamps
+  parallel(
   
   //stage 'Stage_2'
   {
