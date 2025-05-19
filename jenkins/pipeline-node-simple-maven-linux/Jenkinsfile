@@ -9,11 +9,12 @@ properties (
 )
 
 node('linux') {
-  stage ("Stage_1")
-  timestamps {
-    echo "linux - Stage_1"
-    myTask("Stage_1")
-    archiveArtifacts artifacts: "Build_${BUILD_ID}_*.log", fingerprint: true, followSymlinks: false
+  stage ("Stage_1") {
+    timestamps {
+      echo "linux - Stage_1"
+      myTask("Stage_1")
+      archiveArtifacts artifacts: "Build_${BUILD_ID}_*.log", fingerprint: true, followSymlinks: false
+    }
   }
 }
 
