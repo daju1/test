@@ -1,14 +1,14 @@
-properties(
-    [
-        parameters([
-            choice(name: 'branchName', 
-                  choices: ['debug', 'release', 'feature'],
-                  description: 'Pick something')
-        ])   
-    ]
-)  
+properties (
+  [
+    parameters ([
+      choice (name: 'branchName', 
+              choices: ['debug', 'release', 'feature'],
+              description: 'Pick something')
+    ])
+  ]
+)
 
-node('linux'){
+node('linux') {
   stage 'Stage_1'
   timestamps {
     echo "linux - Stage_1"
@@ -17,8 +17,8 @@ node('linux'){
   }
 }
 
-node('docker'){
-  timestamps{
+node('docker') {
+  timestamps {
     stage ('Stages_2_and_3') {
       parallel (
         "Stage_2" : {
@@ -26,10 +26,10 @@ node('docker'){
             myDocker()
             archiveArtifacts artifacts: "Build_${BUILD_ID}_*.log", fingerprint: true, followSymlinks: false
         },
-        "Stage_3": {
+        "Stage_3" : {
           if (params.branchName == 'release' || params.branchName == 'feature') {
             echo "Stage_3"
-            myTask('Stage_3')
+            myTask ('Stage_3')
             archiveArtifacts artifacts: "Build_${BUILD_ID}_*.log", fingerprint: true, followSymlinks: false
           }
         }
@@ -40,39 +40,38 @@ node('docker'){
 
 def myDocker()
 {
-    checkout scm
+  checkout scm
 
-    def dockerFile = 'jenkins/pipeline-node-simple-maven-linux/Dockerfile'
-    def imageName = "my-image:${env.BUILD_ID}"
-    def dockerArgs = " --pull --rm ${pwd}"
-    def imageArgs = "-f ${dockerFile} ${dockerArgs}"
-    def customImage = docker.build(imageName, imageArgs)
+  def dockerFile = 'jenkins/pipeline-node-simple-maven-linux/Dockerfile'
+  def imageName = "my-image:${env.BUILD_ID}"
+  def dockerArgs = " --pull --rm ${pwd}"
+  def imageArgs = "-f ${dockerFile} ${dockerArgs}"
+  def customImage = docker.build(imageName, imageArgs)
 
-    customImage.inside {
-        //sh 'make test'
-        myTask("docker")
-        
-        //git url: 'https://github.com/jglick/simple-maven-project-with-tests.git'
+  customImage.inside {
+    //sh 'make test'
+    myTask ("docker")
 
-        //def mvnHome = tool 'M3'
-        //env.PATH = "${mvnHome}/bin:${env.PATH}"
-        //sh 'mvn -B clean verify'        
-    }
+    //git url: 'https://github.com/jglick/simple-maven-project-with-tests.git'
+
+    //def mvnHome = tool 'M3'
+    //env.PATH = "${mvnHome}/bin:${env.PATH}"
+    //sh 'mvn -B clean verify'
+  }
 }
 
 def myTask(STAGE_NAME)
 {
-    echo "${STAGE_NAME}"
-    //sh 'lsb_release -a'
-    sh 'uname -a'
-    sh 'printenv'
-    
-    sh "echo ${STAGE_NAME} > Build_${BUILD_ID}_${STAGE_NAME}.log"
-    sh "echo ${BUILD_TIMESTAMP} >> Build_${BUILD_ID}_${STAGE_NAME}.log"
-    //echo "'\n' > Build_${BUILD_ID}_${STAGE_NAME}.log"
-    //sh "echo \$(lsb_release -a) >> Build_${BUILD_ID}_${STAGE_NAME}.log"
-    sh "echo \$(uname -a) >> Build_${BUILD_ID}_${STAGE_NAME}.log"
-    //echo "'\n' > Build_${BUILD_ID}_${STAGE_NAME}.log"
-    sh 'printenv >> Build_${BUILD_ID}_${STAGE_NAME}.log'
-}
+  echo "${STAGE_NAME}"
+  //sh 'lsb_release -a'
+  sh 'uname -a'
+  sh 'printenv'
 
+  sh "echo ${STAGE_NAME} > Build_${BUILD_ID}_${STAGE_NAME}.log"
+  sh "echo ${BUILD_TIMESTAMP} >> Build_${BUILD_ID}_${STAGE_NAME}.log"
+  //echo "'\n' > Build_${BUILD_ID}_${STAGE_NAME}.log"
+  //sh "echo \$(lsb_release -a) >> Build_${BUILD_ID}_${STAGE_NAME}.log"
+  sh "echo \$(uname -a) >> Build_${BUILD_ID}_${STAGE_NAME}.log"
+  //echo "'\n' > Build_${BUILD_ID}_${STAGE_NAME}.log"
+  sh 'printenv >> Build_${BUILD_ID}_${STAGE_NAME}.log'
+}
