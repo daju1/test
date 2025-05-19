@@ -12,7 +12,7 @@ node('linux') {
   stage 'Stage_1'
   timestamps {
     echo "linux - Stage_1"
-    myTask('Stage_1')
+    myTask()
     archiveArtifacts artifacts: "Build_${BUILD_ID}_*.log", fingerprint: true, followSymlinks: false
   }
 }
@@ -29,7 +29,7 @@ node('docker') {
         "Stage_3" : {
           if (params.branchName == 'release' || params.branchName == 'feature') {
             echo "Stage_3"
-            myTask ('Stage_3')
+            myTask ()
             archiveArtifacts artifacts: "Build_${BUILD_ID}_*.log", fingerprint: true, followSymlinks: false
           }
         }
@@ -50,7 +50,7 @@ def myDocker()
 
   customImage.inside {
     //sh 'make test'
-    myTask ("docker")
+    myTask ()
 
     //git url: 'https://github.com/jglick/simple-maven-project-with-tests.git'
 
@@ -60,7 +60,7 @@ def myDocker()
   }
 }
 
-def myTask(STAGE_NAME)
+def myTask()
 {
   echo "${STAGE_NAME}"
   //sh 'lsb_release -a'
