@@ -68,7 +68,7 @@ def myTask(STAGE_NAME)
   sh 'uname -a'
   sh 'printenv'
 
-  sh "echo ${env.STAGE_NAME} > Build_${env.BUILD_ID}_${env.STAGE_NAME}.log"
+  sh "echo ${env.STAGE_NAME} >> Build_${env.BUILD_ID}_${env.STAGE_NAME}.log"
   sh "echo ${BUILD_TIMESTAMP} >> Build_${env.BUILD_ID}_${env.STAGE_NAME}.log"
   //echo "'\n' > Build_${BUILD_ID}_${STAGE_NAME}.log"
   //sh "echo \$(lsb_release -a) >> Build_${BUILD_ID}_${STAGE_NAME}.log"
