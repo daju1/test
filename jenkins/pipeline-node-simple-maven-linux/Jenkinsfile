@@ -9,17 +9,17 @@ properties (
 )
 
 node('linux') {
-  stage 'Stage_1'
+  stage "Stage_1"
   timestamps {
     echo "linux - Stage_1"
-    myTask('Stage_1')
+    myTask("Stage_1")
     archiveArtifacts artifacts: "Build_${BUILD_ID}_*.log", fingerprint: true, followSymlinks: false
   }
 }
 
 node('docker') {
   timestamps {
-    stage ('Stages_2_and_3') {
+    stage ("Stages_2_and_3") {
       parallel (
         "Stage_2" : {
             echo "Stage_2"
@@ -62,16 +62,16 @@ def myDocker()
 
 def myTask(STAGE_NAME)
 {
-  echo "${STAGE_NAME}"
+  echo "${env.STAGE_NAME}"
   //sh 'lsb_release -a'
   sh 'uname -a'
   sh 'printenv'
 
-  sh "echo ${STAGE_NAME} > Build_${BUILD_ID}_${STAGE_NAME}.log"
-  sh "echo ${BUILD_TIMESTAMP} >> Build_${BUILD_ID}_${STAGE_NAME}.log"
+  sh "echo ${env.STAGE_NAME} > Build_${env.BUILD_ID}_${env.STAGE_NAME}.log"
+  sh "echo ${BUILD_TIMESTAMP} >> Build_${env.BUILD_ID}_${env.STAGE_NAME}.log"
   //echo "'\n' > Build_${BUILD_ID}_${STAGE_NAME}.log"
   //sh "echo \$(lsb_release -a) >> Build_${BUILD_ID}_${STAGE_NAME}.log"
-  sh "echo \$(uname -a) >> Build_${BUILD_ID}_${STAGE_NAME}.log"
+  sh "echo \$(uname -a) >> Build_${env.BUILD_ID}_${env.STAGE_NAME}.log"
   //echo "'\n' > Build_${BUILD_ID}_${STAGE_NAME}.log"
-  sh 'printenv >> Build_${BUILD_ID}_${STAGE_NAME}.log'
+  sh "printenv >> Build_${env.BUILD_ID}_${env.STAGE_NAME}.log"
 }
