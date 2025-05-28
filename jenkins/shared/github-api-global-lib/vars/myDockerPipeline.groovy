@@ -56,6 +56,7 @@ def call(body) {
 
                         steps {
                             //myTask()
+                            writeDockerFile()
                             myDocker()
                         }
                         post {
@@ -95,7 +96,7 @@ def call(body) {
 }
 
 
-def myDocker()
+def writeDockerFile()
 {
     //checkout scm
 
@@ -106,7 +107,10 @@ def myDocker()
     sh "chmod a+x ./Dockerfile"
     sh "pwd"
     sh "ls -la"
+}
 
+def myDocker()
+{
     //def dockerFile = 'jenkins/shared/github-api-global-lib/resources/com/planetpope/Dockerfiles/myDockerFile'
     def dockerFile = './Dockerfile'
     def imageName = "my-image:${env.BUILD_ID}"
