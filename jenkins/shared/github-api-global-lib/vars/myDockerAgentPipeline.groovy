@@ -1,10 +1,9 @@
 def call(body) {
-    writeDockerFile()
-
     def pipelineParams= [:]
     body.resolveStrategy = Closure.DELEGATE_FIRST
     body.delegate = pipelineParams
     body()
+    writeDockerFile()
 
     pipeline {
         agent { label 'docker' }
