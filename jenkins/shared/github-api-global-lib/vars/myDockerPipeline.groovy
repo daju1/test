@@ -86,11 +86,11 @@ def call(body) {
                 } // parallel
             } // stage('Stages 2 and 3')
         }
-        post {
+        /*post {
             always {
                 archiveArtifacts artifacts: 'pipeline.log', fingerprint: true, followSymlinks: false
             }
-        }
+        }*/
     }
 }
 
