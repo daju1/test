@@ -3,7 +3,7 @@ def call(body) {
     body.resolveStrategy = Closure.DELEGATE_FIRST
     body.delegate = pipelineParams
     body()
-    writeDockerFile()
+    //writeDockerFile()
 
     pipeline {
         agent { label 'docker' }
@@ -55,6 +55,7 @@ def call(body) {
                         }
 
                         steps {
+                            writeDockerFile()
                             //myDocker()
                             myTask()
                         }
