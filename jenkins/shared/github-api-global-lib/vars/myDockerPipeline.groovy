@@ -108,10 +108,10 @@ def myDocker()
     sh "ls -la"
 
     //def dockerFile = 'jenkins/shared/github-api-global-lib/resources/com/planetpope/Dockerfiles/myDockerFile'
+    def dockerFile = './Dockerfile'
     def imageName = "my-image:${env.BUILD_ID}"
     def dockerArgs = " --pull --rm ${pwd}"
-    //def imageArgs = "-f ${dockerFile} ${dockerArgs}"
-    def imageArgs = "-f ${dockerArgs}"
+    def imageArgs = "-f ${dockerFile} ${dockerArgs}"
     def customImage = docker.build(imageName, imageArgs)
 
     customImage.inside {
