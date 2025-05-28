@@ -97,8 +97,7 @@ def call(body) {
 
 def myDocker()
 {
-//node {
-    checkout scm
+    //checkout scm
 
     def scriptcontents = libraryResource "com/planetpope/Dockerfiles/myDockerFile"    
     sh "pwd"
@@ -117,8 +116,7 @@ def myDocker()
     customImage.inside {
         //sh 'make test'
         myTask()
-    }
-//}   
+    } 
 }
 
 
