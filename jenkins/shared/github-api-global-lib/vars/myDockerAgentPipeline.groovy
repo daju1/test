@@ -43,9 +43,9 @@ def call(body) {
                     stage('Stage_2') {
                         agent {
                             dockerfile {
-                                filename './Dockerfile'
-                                //dir 'jenkins/shared/github-api-global-lib/resources/com/planetpope/Dockerfiles'
-                                dir "."
+                                filename './myDockerFile'
+                                dir 'jenkins/shared/github-api-global-lib/resources/com/planetpope/Dockerfiles'
+                                //dir "."
                                 // label 'my-defined-label' // Queued There are no nodes with the label ‘my-defined-label’
                                 additionalBuildArgs '--build-arg version=1.0.2'
                                 args '-v /tmp:/tmp'
