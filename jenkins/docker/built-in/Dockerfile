@@ -13,11 +13,11 @@ ARG GROUP_ID
 ARG DEBIAN_FRONTEND=noninteractive
 
 # Configure a 'docker' sudo user without password
-RUN apt-get update && apt-get -y install sudo
-RUN addgroup --gid ${GROUP_ID} ${GROUP_NAME}
-RUN adduser --disabled-password --gecos '' --uid ${USER_ID} --gid ${GROUP_ID} ${USER_NAME}
-RUN usermod -aG sudo ${USER_NAME}
-RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+# RUN apt-get update && apt-get -y install sudo
+# RUN addgroup --gid ${GROUP_ID} ${GROUP_NAME}
+# RUN adduser --disabled-password --gecos '' --uid ${USER_ID} --gid ${GROUP_ID} ${USER_NAME}
+# RUN usermod -aG sudo ${USER_NAME}
+# RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
 # Customize the official Jenkins Docker image, by executing the following two steps:
 USER root
@@ -35,14 +35,15 @@ RUN apt-get update && apt-get install -y lsb-release ca-certificates curl && \
 # Ghemical
 # Install build-essential package (for cross compilation)
 RUN apt-get update
-RUN apt-get -y install build-essential
+RUN apt-get -y install build-essential maven
 
 # Install vim, nano
 RUN apt-get -y install vim nano
 
 # Install a bunch of packages for project
 
-RUN apt-get -y install git
+RUN apt-get -y install git mc
+RUN apt-get -y install net-tools iproute2 iputils-ping
 
 #######################################################
 
