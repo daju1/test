@@ -46,6 +46,10 @@ RUN apt-get -y install git mc
 RUN apt-get -y install net-tools iproute2 iputils-ping
 
 #######################################################
+# Set up scan-host-key script
+RUN set -eux
+COPY ./scan-host-key.sh /
+#######################################################
 
 USER jenkins
 RUN jenkins-plugin-cli --plugins "blueocean docker-workflow"
