@@ -63,12 +63,12 @@ def all_ls_ssh ():
     print (out)
 
 
-def ls_known_hosts (jenkins_container_name, workdir, host_container_ip):
-    cmd="ssh-keyscan " + host_container_ip
+def add_known_hosts (jenkins_container_name, workdir, host_container_ip):
+    cmd = "ssh-keyscan " + host_container_ip
     out = exec_cmd (jenkins_container_name, workdir, cmd)
     print (out)
 
-    cmd="ls .ssh"
+    cmd = "ls .ssh"
     ret = sys_cmd (jenkins_container_name, workdir, cmd)
     if 0 == ret:
         pass
@@ -76,7 +76,7 @@ def ls_known_hosts (jenkins_container_name, workdir, host_container_ip):
         cmd="mkdir .ssh"
         sys_cmd (jenkins_container_name, workdir, cmd)
 
-    cmd="ls .ssh/known_hosts"
+    cmd = "ls .ssh/known_hosts"
     ret = sys_cmd (jenkins_container_name, workdir, cmd)
     if 0 == ret:
         pass
@@ -84,27 +84,58 @@ def ls_known_hosts (jenkins_container_name, workdir, host_container_ip):
         cmd="touch .ssh/known_hosts"
         sys_cmd (jenkins_container_name, workdir, cmd)
 
-    ret = sys_cmd (jenkins_container_name, workdir, "pwd")
-    #ret = sys_cmd (jenkins_container_name, workdir, "ls ./scan-host-key.sh")
     ret = sys_cmd (jenkins_container_name, workdir, "find / -name scan-host-key.sh")
 
-    cmd="/scan-host-key.sh " + host_container_ip
+    cmd = "/scan-host-key.sh " + host_container_ip
     out = exec_cmd (jenkins_container_name, workdir, cmd)
     print (out)
 
-    cmd="cat .ssh/known_hosts"
+    cmd = "cat .ssh/known_hosts"
     ret = sys_cmd (jenkins_container_name, workdir, cmd)
 
 
-host_container="ubivisgmbh_git_server"
-host_container="jenkins_agent"
+def view_pub_key (jenkins_container_name, workdir):
+    cmd = "pwd"
+    cmd = "ls .ssh"
+    #cmd = "ls -la agent"
+    #cmd = "ls -la"
+    ret = sys_cmd (jenkins_container_name, workdir, cmd)
+    print(ret)
+    out = exec_cmd (jenkins_container_name, workdir, cmd)
+    print (out)
 
-host_container_ip = get_container_ip (host_container)
-print(host_container_ip)
+def add_jenkins_agent_to_built_in_known_host ():
+    host_container="jenkins_agent"
+    host_container_ip = get_container_ip (host_container)
+    if host_container_ip is not None:
+        print(host_container + " IP is " + host_container_ip)
 
-if host_container_ip is not None:
-    #all_ls_ssh()
-    ls_known_hosts ("jenkins_sandbox", "/var/jenkins_home", host_container_ip)
-    #ls_known_hosts ("jenkins-blueocean", "/var/jenkins_home", host_container_ip)
-    #ls_known_hosts ("agent",             "/home/jenkins", host_container_ip)
-    #ls_known_hosts ("agent_android",     "/home/jenkins", host_container_ip)
+        #add_known_hosts ("jenkins-blueocean", "/var/jenkins_home", host_container_ip)
+        add_known_hosts ("jenkins_sandbox", "/var/jenkins_home", host_container_ip)
+
+def add_jenkins_agent_android_to_built_in_known_host ():
+    host_container="jenkins_agent_android"
+    host_container_ip = get_container_ip (host_container)
+
+    if host_container_ip is not None:
+        print(host_container + " IP is " + host_container_ip)
+
+        #add_known_hosts ("jenkins-blueocean", "/var/jenkins_home", host_container_ip)
+        add_known_hosts ("jenkins_sandbox", "/var/jenkins_home", host_container_ip)
+
+def add_ubivisgmbh_git_server_to_built_in_and_agents_known_host ():
+    host_container="ubivisgmbh_git_server"
+    host_container_ip = get_container_ip (host_container)
+    if host_container_ip is not None:
+        print(host_container + " IP is " + host_container_ip)
+
+        add_known_hosts ("jenkins_sandbox", "/var/jenkins_home", host_container_ip)
+        add_known_hosts ("jenkins_agent", "/var/jenkins_home", host_container_ip)
+        add_known_hosts ("jenkins_agent_android", "/var/jenkins_home", host_container_ip)
+
+
+#view_pub_key("jenkins_agent", "/home/jenkins")
+
+#add_jenkins_agent_to_built_in_known_host ()
+#add_jenkins_agent_android_to_built_in_known_host ()
+add_ubivisgmbh_git_server_to_built_in_and_agents_known_host ()

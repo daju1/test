@@ -22,7 +22,7 @@ FROM jenkins/ssh-agent:latest
 #    echo "${GIT_USER}:12345" | chpasswd
 
 #ARG USER_NAME
-##ARG GROUP_NAME
+#ARG GROUP_NAME
 #ARG USER_ID
 #ARG GROUP_ID
 
@@ -75,3 +75,4 @@ RUN set -eux
 COPY ./scan-host-key.sh /
 #######################################################
 
+COPY ./setup-sshd /usr/local/bin/

@@ -10,3 +10,5 @@ RUN apt-get -y install net-tools iproute2 iputils-ping
 RUN set -eux
 COPY ./scan-host-key.sh /
 #######################################################
+
+COPY ./setup-sshd /usr/local/bin/
