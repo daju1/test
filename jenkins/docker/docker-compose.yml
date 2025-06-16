@@ -94,7 +94,6 @@ services:
     environment:
       #- GIT_USER_PASSWORD=[secret]
       #- "GIT_AUTHORIZED_KEYS=[ssh-rsa xxxxx xxx@xxx]\n[ssh-rsa xxxxx xxx@xxx]"
-      - GIT_AUTHORIZED_KEYS=[$(cat ~/.ssh/id_rsa.pub)]
       - GIT_HOST_HINT=example.org:2022
     volumes:
       #- config:/etc/git
@@ -107,10 +106,10 @@ services:
     image: rockstorm/git-server
 
     environment:
-      GIT_PASSWORD_FILE: /run/secrets/git_password
+      #GIT_PASSWORD_FILE: /run/secrets/git_password
       SSH_AUTH_METHODS: "publickey"
-      SSH_HOST_KEYS_PATH: /tmp/host-keys
-      REPOSITORIES_HOME_LINK: /srv/git/project
+      #SSH_HOST_KEYS_PATH: /tmp/host-keys
+      #REPOSITORIES_HOME_LINK: /srv/git/project
     ports:
       - 2202:22
 
@@ -118,6 +117,7 @@ services:
       #- /path/to/password/file:/run/secrets/git_password:ro
       #- /path/to/authorized_keys:/home/git/.ssh/authorized_keys
       - ./ssh-agent/.ssh/id_rsa.pub:/home/git/.ssh/authorized_keys
+      #- ~/.ssh/id_rsa.pub:/home/git/.ssh/authorized_keys
       # - examples/sshd_config:/etc/ssh/sshd_config:ro
       # - /path/to/host-keys:/tmp/host-keys:ro
       - ../../../CI_CD/gitserver:/srv/git
