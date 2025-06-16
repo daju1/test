@@ -50,7 +50,7 @@ fi
 if [[ ${JENKINS_SLAVE_SSH_PUBKEY} == ssh-* ]]; then
   write_key "${JENKINS_SLAVE_SSH_PUBKEY}"
 fi
-if [[ $(cat /run/secrets/ssh_pubkey) == ssh-* ]]; then
+if [[ $(cat /run/secrets/ssh_agent_pubkey) == ssh-* ]]; then
   write_key "$(cat /run/secrets/ssh_agent_pubkey)"
 fi
 
