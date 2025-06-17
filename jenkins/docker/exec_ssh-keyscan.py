@@ -5,7 +5,12 @@
 
 def sys_cmd (jenkins_container_name, workdir, cmd):
     import os
-    command = "docker exec -it --workdir=" + workdir + " " + jenkins_container_name
+    command = "docker exec -it "
+
+    if None != workdir:
+        command += "--workdir=" + workdir + " "
+
+    command += jenkins_container_name
     # print(command)
 
     ret = os.system(command + " " + cmd)
@@ -64,9 +69,9 @@ def all_ls_ssh ():
 
 
 def add_known_hosts (jenkins_container_name, workdir, host_container_ip):
-    cmd = "ssh-keyscan " + host_container_ip
-    out = exec_cmd (jenkins_container_name, workdir, cmd)
-    print (out)
+    #cmd = "ssh-keyscan " + host_container_ip
+    #out = exec_cmd (jenkins_container_name, workdir, cmd)
+    #print (out)
 
     cmd = "ls .ssh"
     ret = sys_cmd (jenkins_container_name, workdir, cmd)
@@ -94,13 +99,17 @@ def add_known_hosts (jenkins_container_name, workdir, host_container_ip):
     #ret = sys_cmd (jenkins_container_name, workdir, cmd)
 
 def ssh_keygen_R (jenkins_container_name, workdir, host_container_ip):
-    cmd = "ls -la .ssh"
-    out = exec_cmd (jenkins_container_name, workdir, cmd)
-    print (jenkins_container_name, workdir, cmd, " -->" ,out)
+    #cmd = "ls -la .ssh"
+    #out = exec_cmd (jenkins_container_name, workdir, cmd)
+    #print (jenkins_container_name, workdir, cmd, " -->" ,out)
 
     cmd = 'ssh-keygen -f "' + workdir + '/.ssh/known_hosts" -R ' + host_container_ip
-    out = sys_cmd (jenkins_container_name, workdir, cmd)
-    print (out)
+    ret = sys_cmd (jenkins_container_name, workdir, cmd)
+
+def ssh_git_gitserver(jenkins_container_name, host_container_ip):
+    cmd = 'ssh git@' + host_container_ip
+    ret = sys_cmd (jenkins_container_name, None, cmd)
+    #ret = sys_cmd (jenkins_container_name, "/root/", cmd)
 
 def view_pub_key (jenkins_container_name, workdir):
     cmd = "pwd"
@@ -130,14 +139,20 @@ def add_git_server_known_host (host_container):
     host_container_ip = get_container_ip (host_container)
     if host_container_ip is not None:
         print(host_container + " IP is " + host_container_ip)
-        #return
 
-        ssh_keygen_R    ("jenkins_sandbox",       "/var/jenkins_home", host_container_ip)
-        add_known_hosts ("jenkins_sandbox",       "/var/jenkins_home", host_container_ip)
+        ssh_keygen_R     ("jenkins_sandbox",       "/var/jenkins_home", host_container_ip)
+        ssh_keygen_R     ("jenkins_sandbox",       "/root/",            host_container_ip)
+        add_known_hosts  ("jenkins_sandbox",       "/var/jenkins_home", host_container_ip)
+        add_known_hosts  ("jenkins_sandbox",       "/root/",            host_container_ip)
+        #ssh_git_gitserver("jenkins_sandbox",                            host_container_ip)
+
         ssh_keygen_R    ("jenkins_agent",         "/home/jenkins",     host_container_ip)
         add_known_hosts ("jenkins_agent",         "/home/jenkins",     host_container_ip)
+        add_known_hosts ("jenkins_agent",         "/root/",            host_container_ip)
+
         ssh_keygen_R    ("jenkins_agent_android", "/home/jenkins",     host_container_ip)
         add_known_hosts ("jenkins_agent_android", "/home/jenkins",     host_container_ip)
+        add_known_hosts ("jenkins_agent_android", "/root/",            host_container_ip)
 
 #view_pub_key("jenkins_agent", "/home/jenkins")
 
@@ -147,6 +162,7 @@ add_jenkins_agent_known_host ("jenkins_agent_android")
 add_git_server_known_host ("git_server_jkarlos")
 add_git_server_known_host ("git_server_ubivisgmbh")
 add_git_server_known_host ("git_server_rockstorm")
+
 # view_pub_key("git_server_rockstorm", "/home/git")
 #view_pub_key("rockstorm_git_server", "/home/git")
 #add_git_server_known_host ("rockstorm_git_server")
