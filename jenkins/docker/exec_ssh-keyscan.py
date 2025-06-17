@@ -91,7 +91,7 @@ def add_known_hosts (jenkins_container_name, workdir, host_container_ip):
 
     #ret = sys_cmd (jenkins_container_name, workdir, "find / -name scan-host-key.sh")
 
-    cmd = "/scan-host-key.sh " + host_container_ip
+    cmd = "/scan-host-key.sh " + host_container_ip + " " + workdir
     out = exec_cmd (jenkins_container_name, workdir, cmd)
     print (out)
 
@@ -159,8 +159,8 @@ def add_git_server_known_host (host_container):
 add_jenkins_agent_known_host ("jenkins_agent")
 add_jenkins_agent_known_host ("jenkins_agent_android")
 
-add_git_server_known_host ("git_server_jkarlos")
-add_git_server_known_host ("git_server_ubivisgmbh")
+#add_git_server_known_host ("git_server_jkarlos")
+#add_git_server_known_host ("git_server_ubivisgmbh")
 add_git_server_known_host ("git_server_rockstorm")
 
 # view_pub_key("git_server_rockstorm", "/home/git")
